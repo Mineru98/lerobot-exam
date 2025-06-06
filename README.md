@@ -6,6 +6,7 @@
 - [ ] calibrate
 - [x] Camera Connect
 - [ ] Teleoperate
+- [ ] OpenCVCameraConfig : index 확인
 
 ## usb 포트 확인 및 ID 부여
 
