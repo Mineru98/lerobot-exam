@@ -96,7 +96,6 @@ coverage.xml
 .pytest_cache/
 
 # Ignore .cache
-.cache/*
 
 # Translations
 *.mo
