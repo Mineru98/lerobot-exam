@@ -18,11 +18,7 @@ from typing import Sequence
 
 import draccus
 
-from lerobot.common.robot_devices.cameras.configs import (
-    CameraConfig,
-    IntelRealSenseCameraConfig,
-    OpenCVCameraConfig,
-)
+from lerobot.common.robot_devices.cameras.configs import CameraConfig, IntelRealSenseCameraConfig, OpenCVCameraConfig
 from lerobot.common.robot_devices.motors.configs import (
     DynamixelMotorsBusConfig,
     FeetechMotorsBusConfig,
@@ -178,30 +174,10 @@ class AlohaRobotConfig(ManipulatorRobotConfig):
     # on another USB hub or PCIe card.
     cameras: dict[str, CameraConfig] = field(
         default_factory=lambda: {
-            "cam_high": IntelRealSenseCameraConfig(
-                serial_number=128422271347,
-                fps=30,
-                width=640,
-                height=480,
-            ),
-            "cam_low": IntelRealSenseCameraConfig(
-                serial_number=130322270656,
-                fps=30,
-                width=640,
-                height=480,
-            ),
-            "cam_left_wrist": IntelRealSenseCameraConfig(
-                serial_number=218622272670,
-                fps=30,
-                width=640,
-                height=480,
-            ),
-            "cam_right_wrist": IntelRealSenseCameraConfig(
-                serial_number=130322272300,
-                fps=30,
-                width=640,
-                height=480,
-            ),
+            "cam_high": IntelRealSenseCameraConfig(serial_number=128422271347, fps=30, width=640, height=480),
+            "cam_low": IntelRealSenseCameraConfig(serial_number=130322270656, fps=30, width=640, height=480),
+            "cam_left_wrist": IntelRealSenseCameraConfig(serial_number=218622272670, fps=30, width=640, height=480),
+            "cam_right_wrist": IntelRealSenseCameraConfig(serial_number=130322272300, fps=30, width=640, height=480),
         }
     )
 
@@ -230,14 +206,14 @@ class KochRobotConfig(ManipulatorRobotConfig):
                     "wrist_roll": [5, "xl330-m077"],
                     "gripper": [6, "xl330-m077"],
                 },
-            ),
+            )
         }
     )
 
     follower_arms: dict[str, MotorsBusConfig] = field(
         default_factory=lambda: {
             "main": DynamixelMotorsBusConfig(
-                port="/dev/tty.usbmodem585A0076891",
+                port="/dev/tty.usbmodem5A7A0186761",
                 motors={
                     # name: (index, model)
                     "shoulder_pan": [1, "xl430-w250"],
@@ -247,24 +223,14 @@ class KochRobotConfig(ManipulatorRobotConfig):
                     "wrist_roll": [5, "xl330-m288"],
                     "gripper": [6, "xl330-m288"],
                 },
-            ),
+            )
         }
     )
 
     cameras: dict[str, CameraConfig] = field(
         default_factory=lambda: {
-            "laptop": OpenCVCameraConfig(
-                camera_index=0,
-                fps=30,
-                width=640,
-                height=480,
-            ),
-            "phone": OpenCVCameraConfig(
-                camera_index=1,
-                fps=30,
-                width=640,
-                height=480,
-            ),
+            "laptop": OpenCVCameraConfig(camera_index=0, fps=30, width=640, height=480),
+            "phone": OpenCVCameraConfig(camera_index=1, fps=30, width=640, height=480),
         }
     )
 
@@ -317,7 +283,7 @@ class KochBimanualRobotConfig(ManipulatorRobotConfig):
     follower_arms: dict[str, MotorsBusConfig] = field(
         default_factory=lambda: {
             "left": DynamixelMotorsBusConfig(
-                port="/dev/tty.usbmodem585A0076891",
+                port="/dev/tty.usbmodem5A7A0186761",
                 motors={
                     # name: (index, model)
                     "shoulder_pan": [1, "xl430-w250"],
@@ -329,7 +295,7 @@ class KochBimanualRobotConfig(ManipulatorRobotConfig):
                 },
             ),
             "right": DynamixelMotorsBusConfig(
-                port="/dev/tty.usbmodem575E0032081",
+                port="/dev/tty.usbmodem5A7A0186761",
                 motors={
                     # name: (index, model)
                     "shoulder_pan": [1, "xl430-w250"],
@@ -345,18 +311,8 @@ class KochBimanualRobotConfig(ManipulatorRobotConfig):
 
     cameras: dict[str, CameraConfig] = field(
         default_factory=lambda: {
-            "laptop": OpenCVCameraConfig(
-                camera_index=0,
-                fps=30,
-                width=640,
-                height=480,
-            ),
-            "phone": OpenCVCameraConfig(
-                camera_index=1,
-                fps=30,
-                width=640,
-                height=480,
-            ),
+            "laptop": OpenCVCameraConfig(camera_index=0, fps=30, width=640, height=480),
+            "phone": OpenCVCameraConfig(camera_index=1, fps=30, width=640, height=480),
         }
     )
 
@@ -380,7 +336,7 @@ class MossRobotConfig(ManipulatorRobotConfig):
     leader_arms: dict[str, MotorsBusConfig] = field(
         default_factory=lambda: {
             "main": FeetechMotorsBusConfig(
-                port="/dev/tty.usbmodem58760431091",
+                port="/dev/tty.usbmodem5A7A0186941",
                 motors={
                     # name: (index, model)
                     "shoulder_pan": [1, "sts3215"],
@@ -390,14 +346,14 @@ class MossRobotConfig(ManipulatorRobotConfig):
                     "wrist_roll": [5, "sts3215"],
                     "gripper": [6, "sts3215"],
                 },
-            ),
+            )
         }
     )
 
     follower_arms: dict[str, MotorsBusConfig] = field(
         default_factory=lambda: {
             "main": FeetechMotorsBusConfig(
-                port="/dev/tty.usbmodem585A0076891",
+                port="/dev/tty.usbmodem5A7A0186761",
                 motors={
                     # name: (index, model)
                     "shoulder_pan": [1, "sts3215"],
@@ -407,24 +363,14 @@ class MossRobotConfig(ManipulatorRobotConfig):
                     "wrist_roll": [5, "sts3215"],
                     "gripper": [6, "sts3215"],
                 },
-            ),
+            )
         }
     )
 
     cameras: dict[str, CameraConfig] = field(
         default_factory=lambda: {
-            "laptop": OpenCVCameraConfig(
-                camera_index=0,
-                fps=30,
-                width=640,
-                height=480,
-            ),
-            "phone": OpenCVCameraConfig(
-                camera_index=1,
-                fps=30,
-                width=640,
-                height=480,
-            ),
+            "laptop": OpenCVCameraConfig(camera_index=0, fps=30, width=640, height=480),
+            "phone": OpenCVCameraConfig(camera_index=1, fps=30, width=640, height=480),
         }
     )
 
@@ -443,7 +389,7 @@ class So101RobotConfig(ManipulatorRobotConfig):
     leader_arms: dict[str, MotorsBusConfig] = field(
         default_factory=lambda: {
             "main": FeetechMotorsBusConfig(
-                port="/dev/tty.usbmodem58760431091",
+                port="/dev/tty.usbmodem5A7A0186941",
                 motors={
                     # name: (index, model)
                     "shoulder_pan": [1, "sts3215"],
@@ -453,14 +399,14 @@ class So101RobotConfig(ManipulatorRobotConfig):
                     "wrist_roll": [5, "sts3215"],
                     "gripper": [6, "sts3215"],
                 },
-            ),
+            )
         }
     )
 
     follower_arms: dict[str, MotorsBusConfig] = field(
         default_factory=lambda: {
             "main": FeetechMotorsBusConfig(
-                port="/dev/tty.usbmodem585A0076891",
+                port="/dev/tty.usbmodem5A7A0186761",
                 motors={
                     # name: (index, model)
                     "shoulder_pan": [1, "sts3215"],
@@ -470,24 +416,14 @@ class So101RobotConfig(ManipulatorRobotConfig):
                     "wrist_roll": [5, "sts3215"],
                     "gripper": [6, "sts3215"],
                 },
-            ),
+            )
         }
     )
 
     cameras: dict[str, CameraConfig] = field(
         default_factory=lambda: {
-            "laptop": OpenCVCameraConfig(
-                camera_index=0,
-                fps=30,
-                width=640,
-                height=480,
-            ),
-            "phone": OpenCVCameraConfig(
-                camera_index=1,
-                fps=30,
-                width=640,
-                height=480,
-            ),
+            "laptop": OpenCVCameraConfig(camera_index=0, fps=30, width=640, height=480),
+            "phone": OpenCVCameraConfig(camera_index=1, fps=30, width=640, height=480),
         }
     )
 
@@ -506,7 +442,7 @@ class So100RobotConfig(ManipulatorRobotConfig):
     leader_arms: dict[str, MotorsBusConfig] = field(
         default_factory=lambda: {
             "main": FeetechMotorsBusConfig(
-                port="/dev/tty.usbmodem58760431091",
+                port="/dev/tty.usbmodem5A7A0186941",
                 motors={
                     # name: (index, model)
                     "shoulder_pan": [1, "sts3215"],
@@ -516,14 +452,14 @@ class So100RobotConfig(ManipulatorRobotConfig):
                     "wrist_roll": [5, "sts3215"],
                     "gripper": [6, "sts3215"],
                 },
-            ),
+            )
         }
     )
 
     follower_arms: dict[str, MotorsBusConfig] = field(
         default_factory=lambda: {
             "main": FeetechMotorsBusConfig(
-                port="/dev/tty.usbmodem585A0076891",
+                port="/dev/tty.usbmodem5A7A0186761",
                 motors={
                     # name: (index, model)
                     "shoulder_pan": [1, "sts3215"],
@@ -533,24 +469,14 @@ class So100RobotConfig(ManipulatorRobotConfig):
                     "wrist_roll": [5, "sts3215"],
                     "gripper": [6, "sts3215"],
                 },
-            ),
+            )
         }
     )
 
     cameras: dict[str, CameraConfig] = field(
         default_factory=lambda: {
-            "laptop": OpenCVCameraConfig(
-                camera_index=0,
-                fps=30,
-                width=640,
-                height=480,
-            ),
-            "phone": OpenCVCameraConfig(
-                camera_index=1,
-                fps=30,
-                width=640,
-                height=480,
-            ),
+            "laptop": OpenCVCameraConfig(camera_index=0, fps=30, width=640, height=480),
+            "phone": OpenCVCameraConfig(camera_index=1, fps=30, width=640, height=480),
         }
     )
 
@@ -568,25 +494,12 @@ class StretchRobotConfig(RobotConfig):
     cameras: dict[str, CameraConfig] = field(
         default_factory=lambda: {
             "navigation": OpenCVCameraConfig(
-                camera_index="/dev/hello-nav-head-camera",
-                fps=10,
-                width=1280,
-                height=720,
-                rotation=-90,
+                camera_index="/dev/hello-nav-head-camera", fps=10, width=1280, height=720, rotation=-90
             ),
             "head": IntelRealSenseCameraConfig(
-                name="Intel RealSense D435I",
-                fps=30,
-                width=640,
-                height=480,
-                rotation=90,
+                name="Intel RealSense D435I", fps=30, width=640, height=480, rotation=90
             ),
-            "wrist": IntelRealSenseCameraConfig(
-                name="Intel RealSense D405",
-                fps=30,
-                width=640,
-                height=480,
-            ),
+            "wrist": IntelRealSenseCameraConfig(name="Intel RealSense D405", fps=30, width=640, height=480),
         }
     )
 
@@ -608,12 +521,8 @@ class LeKiwiRobotConfig(RobotConfig):
 
     cameras: dict[str, CameraConfig] = field(
         default_factory=lambda: {
-            "front": OpenCVCameraConfig(
-                camera_index="/dev/video0", fps=30, width=640, height=480, rotation=90
-            ),
-            "wrist": OpenCVCameraConfig(
-                camera_index="/dev/video2", fps=30, width=640, height=480, rotation=180
-            ),
+            "front": OpenCVCameraConfig(camera_index="/dev/video0", fps=30, width=640, height=480, rotation=90),
+            "wrist": OpenCVCameraConfig(camera_index="/dev/video2", fps=30, width=640, height=480, rotation=180),
         }
     )
 
@@ -632,7 +541,7 @@ class LeKiwiRobotConfig(RobotConfig):
                     "wrist_roll": [5, "sts3215"],
                     "gripper": [6, "sts3215"],
                 },
-            ),
+            )
         }
     )
 
@@ -652,7 +561,7 @@ class LeKiwiRobotConfig(RobotConfig):
                     "back_wheel": (8, "sts3215"),
                     "right_wheel": (9, "sts3215"),
                 },
-            ),
+            )
         }
     )
 
