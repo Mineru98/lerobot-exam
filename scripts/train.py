@@ -20,6 +20,7 @@ from pprint import pformat
 from typing import Any
 
 import torch
+from eval import eval_policy
 from termcolor import colored
 from torch.amp import GradScaler
 from torch.optim import Optimizer
@@ -41,16 +42,10 @@ from lerobot.common.utils.train_utils import (
     save_checkpoint,
     update_last_checkpoint,
 )
-from lerobot.common.utils.utils import (
-    format_big_number,
-    get_safe_torch_device,
-    has_method,
-    init_logging,
-)
+from lerobot.common.utils.utils import format_big_number, get_safe_torch_device, has_method, init_logging
 from lerobot.common.utils.wandb_utils import WandBLogger
 from lerobot.configs import parser
 from lerobot.configs.train import TrainPipelineConfig
-from lerobot.scripts.eval import eval_policy
 
 
 def update_policy(
@@ -75,11 +70,7 @@ def update_policy(
     # Unscale the gradient of the optimizer's assigned params in-place **prior to gradient clipping**.
     grad_scaler.unscale_(optimizer)
 
-    grad_norm = torch.nn.utils.clip_grad_norm_(
-        policy.parameters(),
-        grad_clip_norm,
-        error_if_nonfinite=False,
-    )
+    grad_norm = torch.nn.utils.clip_grad_norm_(policy.parameters(), grad_clip_norm, error_if_nonfinite=False)
 
     # Optimizer's gradients are already unscaled, so scaler.step does not unscale them,
     # although it still skips optimizer.step() if the gradients contain infs or NaNs.
@@ -136,10 +127,7 @@ def train(cfg: TrainPipelineConfig):
         eval_env = make_env(cfg.env, n_envs=cfg.eval.batch_size, use_async_envs=cfg.eval.use_async_envs)
 
     logging.info("Creating policy")
-    policy = make_policy(
-        cfg=cfg.policy,
-        ds_meta=dataset.meta,
-    )
+    policy = make_policy(cfg=cfg.policy, ds_meta=dataset.meta)
 
     logging.info("Creating optimizer and scheduler")
     optimizer, lr_scheduler = make_optimizer_and_scheduler(cfg, policy)
@@ -166,9 +154,7 @@ def train(cfg: TrainPipelineConfig):
     if hasattr(cfg.policy, "drop_n_last_frames"):
         shuffle = False
         sampler = EpisodeAwareSampler(
-            dataset.episode_data_index,
-            drop_n_last_frames=cfg.policy.drop_n_last_frames,
-            shuffle=True,
+            dataset.episode_data_index, drop_n_last_frames=cfg.policy.drop_n_last_frames, shuffle=True
         )
     else:
         shuffle = True
@@ -248,10 +234,7 @@ def train(cfg: TrainPipelineConfig):
         if cfg.env and is_eval_step:
             step_id = get_step_identifier(step, cfg.steps)
             logging.info(f"Eval policy at step {step}")
-            with (
-                torch.no_grad(),
-                torch.autocast(device_type=device.type) if cfg.policy.use_amp else nullcontext(),
-            ):
+            with torch.no_grad(), torch.autocast(device_type=device.type) if cfg.policy.use_amp else nullcontext():
                 eval_info = eval_policy(
                     eval_env,
                     policy,

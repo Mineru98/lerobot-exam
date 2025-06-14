@@ -170,10 +170,6 @@ class TrainPipelineConfig(HubMixin):
                 ) from e
 
         cli_args = kwargs.pop("cli_args", [])
-        with draccus.config_type("json"):
-            return draccus.parse(cls, config_file, args=cli_args)
+        cfg = draccus.parse(cls, config_file, args=cli_args)
 
-
-@dataclass(kw_only=True)
-class TrainRLServerPipelineConfig(TrainPipelineConfig):
-    dataset: DatasetConfig | None = None  # NOTE: In RL, we don't need an offline dataset
+        return cfg

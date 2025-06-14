@@ -11,31 +11,31 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# Note: We subclass str so that serialization is straightforward
-# https://stackoverflow.com/questions/24481852/serialising-an-enum-member-to-json
+
+import abc
 from dataclasses import dataclass
-from enum import Enum
-from typing import Any, Protocol
 
-
-class FeatureType(str, Enum):
-    STATE = "STATE"
-    VISUAL = "VISUAL"
-    ENV = "ENV"
-    ACTION = "ACTION"
-
-
-class NormalizationMode(str, Enum):
-    MIN_MAX = "MIN_MAX"
-    MEAN_STD = "MEAN_STD"
-    IDENTITY = "IDENTITY"
-
-
-class DictLike(Protocol):
-    def __getitem__(self, key: Any) -> Any: ...
+import draccus
 
 
 @dataclass
-class PolicyFeature:
-    type: FeatureType
-    shape: tuple
+class MotorsBusConfig(draccus.ChoiceRegistry, abc.ABC):
+    @property
+    def type(self) -> str:
+        return self.get_choice_name(self.__class__)
+
+
+@MotorsBusConfig.register_subclass("dynamixel")
+@dataclass
+class DynamixelMotorsBusConfig(MotorsBusConfig):
+    port: str
+    motors: dict[str, tuple[int, str]]
+    mock: bool = False
+
+
+@MotorsBusConfig.register_subclass("feetech")
+@dataclass
+class FeetechMotorsBusConfig(MotorsBusConfig):
+    port: str
+    motors: dict[str, tuple[int, str]]
+    mock: bool = False

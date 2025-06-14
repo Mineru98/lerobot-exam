@@ -14,99 +14,75 @@
 
 ```bash
 # 실행
-python scripts/find_motors_bus_port.py
+python lerobot/find_port.py
 
-sudo chmod 666 /dev/tty.usbmodem5A7A0186941
+sudo chmod 666 /dev/tty.usbmodem5A7A0186761
 
-python scripts/configure_motor.py \
-  --port /dev/tty.usbmodem5A7A0186941 \
+python lerobot/scripts/configure_motor.py \
+  --port /dev/tty.usbmodem5A7A0186761 \
   --brand feetech \
   --model sts3215 \
   --baudrate 1000000 \
   --ID 1
 
-python scripts/configure_motor.py \
-  --port /dev/tty.usbmodem5A7A0186941 \
+python lerobot/scripts/configure_motor.py \
+  --port /dev/tty.usbmodem5A7A0186761 \
   --brand feetech \
   --model sts3215 \
   --baudrate 1000000 \
   --ID 2
 
-python scripts/configure_motor.py \
-  --port /dev/tty.usbmodem5A7A0186941 \
+python lerobot/scripts/configure_motor.py \
+  --port /dev/tty.usbmodem5A7A0186761 \
   --brand feetech \
   --model sts3215 \
   --baudrate 1000000 \
   --ID 3
 
-python scripts/configure_motor.py \
-  --port /dev/tty.usbmodem5A7A0186941 \
+python lerobot/scripts/configure_motor.py \
+  --port /dev/tty.usbmodem5A7A0186761 \
   --brand feetech \
   --model sts3215 \
   --baudrate 1000000 \
   --ID 4
 
-python scripts/configure_motor.py \
-  --port /dev/tty.usbmodem5A7A0186941 \
+python lerobot/scripts/configure_motor.py \
+  --port /dev/tty.usbmodem5A7A0186761 \
   --brand feetech \
   --model sts3215 \
   --baudrate 1000000 \
   --ID 5
 
-python scripts/configure_motor.py \
-  --port /dev/tty.usbmodem5A7A0186941 \
+python lerobot/scripts/configure_motor.py \
+  --port /dev/tty.usbmodem5A7A0186761 \
   --brand feetech \
   --model sts3215 \
   --baudrate 1000000 \
   --ID 6
+
+python -m lerobot.setup_motors \
+    --robot.type=so101_follower \
+    --robot.port=/dev/tty.usbmodem5A7A0186761
+
+python -m lerobot.calibrate \
+    --robot.type=so101_follower \
+    --robot.port=/dev/tty.usbmodem5A7A0186761 \
+    --robot.id=usefullabs_follower_arm
 ```
 
 ### 5V (리더)
 
 ```bash
-sudo chmod 666 /dev/tty.usbmodem5A7A0186761
+sudo chmod 666 /dev/tty.usbmodem5A7A0186941
 
-python scripts/configure_motor.py \
-  --port /dev/tty.usbmodem5A7A0186761 \
-  --brand feetech \
-  --model sts3215 \
-  --baudrate 1000000 \
-  --ID 1
+python -m lerobot.setup_motors \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/tty.usbmodem5A7A0186941
 
-python scripts/configure_motor.py \
-  --port /dev/tty.usbmodem5A7A0186761 \
-  --brand feetech \
-  --model sts3215 \
-  --baudrate 1000000 \
-  --ID 2
-
-python scripts/configure_motor.py \
-  --port /dev/tty.usbmodem5A7A0186761 \
-  --brand feetech \
-  --model sts3215 \
-  --baudrate 1000000 \
-  --ID 3
-
-python scripts/configure_motor.py \
-  --port /dev/tty.usbmodem5A7A0186761 \
-  --brand feetech \
-  --model sts3215 \
-  --baudrate 1000000 \
-  --ID 4
-
-python scripts/configure_motor.py \
-  --port /dev/tty.usbmodem5A7A0186761 \
-  --brand feetech \
-  --model sts3215 \
-  --baudrate 1000000 \
-  --ID 5
-
-python scripts/configure_motor.py \
-  --port /dev/tty.usbmodem5A7A0186761 \
-  --brand feetech \
-  --model sts3215 \
-  --baudrate 1000000 \
-  --ID 6
+python -m lerobot.calibrate \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/tty.usbmodem5A7A0186941 \
+    --teleop.id=usefullabs_leader_arm
 ```
 
 ## calibrate
@@ -114,7 +90,7 @@ python scripts/configure_motor.py \
 ### 12V (팔로워, 흰색)
 
 ```bash
-python scripts/control_robot.py \
+python lerobot/scripts/control_robot.py \
   --robot.type=so101 \
   --robot.cameras='{}' \
   --control.type=calibrate \
@@ -141,8 +117,12 @@ python lerobot/common/robot_devices/cameras/opencv.py \
 ## Teleoperate
 
 ```bash
-python scripts/control_robot.py \
+python lerobot/scripts/control_robot.py \
   --robot.type=so101 \
   --robot.cameras='{}' \
   --control.type=teleoperate
+```
+
+```
+python lerobot/scripts/eval.py --pretrained_policy.path=lerobot/smolvla_base
 ```
